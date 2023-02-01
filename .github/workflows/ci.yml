@@ -20,7 +20,7 @@ jobs:
           DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
       - name: Build AAB
         run: |
-          npx jetify && cd android && ./gradlew assembleRelease
+          yarn build:apk-dev
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
