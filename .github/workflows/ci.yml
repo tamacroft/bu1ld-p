@@ -1,9 +1,10 @@
-name: Build Android
+name: Build Android Dev
 on: [push]
 
 jobs:
   install-and-build:
     runs-on: ubuntu-latest
+    environment: development
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,7 +21,7 @@ jobs:
           DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
       - name: Build AAB
         run: |
-          yarn build:apk-dev
+          yarn build:apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
