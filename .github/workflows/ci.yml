@@ -12,7 +12,7 @@ jobs:
       - name: set keystore
         run: |
           echo "${{ secrets.KEYSTORE }}" > propertilord.keystore.asc
-          gpg -d passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch propertilord.keystore.asc > android/app/propertilord.keystore
+          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch propertilord.keystore.asc > android/app/propertilord.keystore
       - name: Install npm dependencies and env
         run: |
           yarn install
