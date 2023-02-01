@@ -1,15 +1,13 @@
 name: Build Android
-on:
-  push:
-    branches:
-      - v1
+on: [push]
+
 jobs:
   install-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: propertilord/pl-scf-mobile
+          repository: tamacroft/pl-scf
           token: ${{ secrets.GH_TOKEN }}
       - name: Install npm dependencies and env
         run: |
