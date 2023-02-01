@@ -1,5 +1,6 @@
 name: Build Android
-on: repository_dispatch
+
+on: [push]
 
 jobs:
   building android:
@@ -26,7 +27,7 @@ jobs:
         run: |
           yarn build:apk
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: app-release.apk
-          path: android/app/build/outputs/apk/release/
+          path: android/app/build/outputs/apk/release/app-release.apk
