@@ -21,7 +21,7 @@ jobs:
           DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
       - name: Build APK
         run: |
-          yarn build:apk
+          yarn build:apk-dev
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
