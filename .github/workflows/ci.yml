@@ -1,22 +1,22 @@
-name: Build Android Dev
-on: [push]
+name: Build Android
+on: repository_dispatch
 
 jobs:
-  install-and-build:
+  building android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           repository: tamacroft/pl-scf
           token: ${{ secrets.GH_TOKEN }}
-      - name: set keystore
+      - name: setup keystore
         run: |
           echo "${{ secrets.KEYSTORE }}" > propertilord.keystore.asc
           gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch propertilord.keystore.asc > android/app/propertilord.keystore
-      - name: Install npm dependencies and env
+      - name: install dependencies
         run: |
           yarn install
-      - name: Build APK
+      - name: build APK
         env:
           BASE_URL: ${{secrets.BASE_URL}}
           HOST: ${{ secrets.HOST }}
