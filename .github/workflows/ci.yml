@@ -12,13 +12,13 @@ jobs:
       - name: Install npm dependencies and env
         run: |
           yarn install
+      - name: Build APK
         env:
           BASE_URL: ${{secrets.BASE_URL}}
           HOST: ${{ secrets.HOST }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           STORAGE_KEY: ${{ secrets.STORAGE_KEY }}
           DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
-      - name: Build APK
         run: |
           yarn build:apk
       - name: Upload Artifact
