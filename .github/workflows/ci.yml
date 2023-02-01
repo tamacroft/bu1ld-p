@@ -19,11 +19,11 @@ jobs:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           STORAGE_KEY: ${{ secrets.STORAGE_KEY }}
           DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
-      - name: Build AAB
+      - name: Build APK
         run: |
           yarn build:apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app-release.aab
-          path: android/app/build/outputs/bundle/release/
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
