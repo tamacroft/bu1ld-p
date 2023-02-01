@@ -3,7 +3,7 @@ name: Build Android
 on: [push]
 
 jobs:
-  building android:
+  building-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
