@@ -1,0 +1,30 @@
+name: Build Android
+on:
+  push:
+    branches:
+      - v1
+jobs:
+  install-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: propertilord/pl-scf-mobile
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Install npm dependencies and env
+        run: |
+          npm install
+        env:
+          BASE_URL: ${{secrets.BASE_URL}}
+          HOST: ${{ secrets.HOST }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          STORAGE_KEY: ${{ secrets.STORAGE_KEY }}
+          DESIGN_WIDTH: ${{ secrets.DESIGN_WIDTH }}
+      - name: Build AAB
+        run: |
+          npx jetify && cd android && ./gradlew assembleRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.aab
+          path: android/app/build/outputs/bundle/release/
