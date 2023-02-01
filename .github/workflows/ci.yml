@@ -11,7 +11,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - name: Install npm dependencies and env
         run: |
-          npm install
+          yarn install
         env:
           BASE_URL: ${{secrets.BASE_URL}}
           HOST: ${{ secrets.HOST }}
