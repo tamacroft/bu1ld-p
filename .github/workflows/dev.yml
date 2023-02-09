@@ -1,6 +1,6 @@
-name: Build Android
+name: build android app development
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   building-android:
@@ -10,10 +10,31 @@ jobs:
         with:
           repository: tamacroft/pl-scf
           token: ${{ secrets.GH_TOKEN }}
+          ref: v1
       - name: setup keystore
         run: |
           echo "${{ secrets.KEYSTORE }}" > propertilord.keystore.asc
           gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch propertilord.keystore.asc > android/app/propertilord.keystore
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: install dependencies
         run: |
           yarn install
@@ -29,5 +50,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-release.apk
+          name: pl-dev.apk
           path: android/app/build/outputs/apk/release/app-release.apk
