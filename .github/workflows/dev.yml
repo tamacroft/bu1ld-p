@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: tamacroft/pl-scf
+          repository: propertilord/pl-scf-mobile
           token: ${{ secrets.GH_TOKEN }}
           ref: v1
       - name: setup keystore
